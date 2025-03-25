@@ -2,17 +2,16 @@ package static2.ex;
 
 public class Car {
 
+    public static int totalCars;
     private String name;
 
-    public static int count;
-
     public Car(String name) {
-        this.name = name;
         System.out.println("차량 구입, 이름: " + name);
-        count++;
+        this.name = name;
+        totalCars++;
     }
 
     public static void showTotalCars() {
-        System.out.println("구매한 차량 수: " + count);
+        System.out.println("구매한 차량 수: " + totalCars);
     }
 }
