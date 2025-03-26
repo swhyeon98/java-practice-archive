@@ -2,41 +2,39 @@ package static2.ex;
 
 public class MathArrayUtils {
 
-    private MathArrayUtils() {}
+    private MathArrayUtils() {
+        // private 인스턴스 생성을 막는다.
+    }
 
     public static int sum(int[] values) {
-        int sum = 0;
+        int total = 0;
         for (int value : values) {
-            sum += value;
+            total += value;
         }
-        return sum;
+        return total;
     }
 
     public static double average(int[] values) {
-        int sum = 0;
-        for (int value : values) {
-            sum += value;
-        }
-        return (double) sum / values.length;
+        return (double) sum(values) / values.length;
     }
 
     public static int min(int[] values) {
-        int min = Integer.MAX_VALUE;
+        int minValue = values[0];
         for (int value : values) {
-            if (min > value) {
-                min = value;
+            if (value < minValue) {
+                minValue = value;
             }
         }
-        return min;
+        return minValue;
     }
 
     public static int max(int[] values) {
-        int max = 0;
+        int maxValue = values[0];
         for (int value : values) {
-            if (max < value) {
-                max = value;
+            if (value > maxValue) {
+                maxValue = value;
             }
         }
-        return max;
+        return maxValue;
     }
 }
