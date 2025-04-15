@@ -1,4 +1,4 @@
-package gpt;
+package gpt.optional;
 
 public class User {
 

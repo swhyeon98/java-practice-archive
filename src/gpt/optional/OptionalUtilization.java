@@ -1,4 +1,4 @@
-package gpt;
+package gpt.optional;
 
 import java.util.Optional;
 
