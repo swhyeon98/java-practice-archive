@@ -10,8 +10,7 @@ public abstract class PayStore {
         } else if (option.equals("new")) {
             return new NewPay();
         } else {
-            System.out.println("결제 수단이 없습니다.");
-            return null;
+            return new DefaultPay();
         }
     }
 }
