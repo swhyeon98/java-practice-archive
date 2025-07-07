@@ -1,17 +1,22 @@
 package inflearn.basic.string;
 
-import java.util.*;
+import java.util.Scanner;
 
 public class WordInSentence {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int count = scanner.nextInt();
-        for (int i = 0; i < count; i++) {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(scanner.next());
-            stringBuilder.reverse();
-            System.out.println(stringBuilder);
+        String[] split = scanner.nextLine().split(" ");
+
+        String word = "";
+        int min = Integer.MIN_VALUE;
+        for (String s : split) {
+            if (min < s.length()) {
+                word = s;
+                min = s.length();
+            }
         }
+
+        System.out.println(word);
     }
 }
