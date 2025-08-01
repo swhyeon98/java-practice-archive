@@ -18,6 +18,13 @@ public class Application {
         }
 
         List<String> numbers = Arrays.asList(input.split(String.valueOf(delimiter)));
+
+        for (String number : numbers) {
+            if (!number.chars().allMatch(Character::isDigit)) {
+                throw new IllegalArgumentException("잘못된 입력입니다.");
+            }
+        }
+
         int result = numbers.stream()
                 .mapToInt(Integer::parseInt)
                 .sum();
