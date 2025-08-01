@@ -17,6 +17,21 @@ public class Application {
             return;
         }
 
+        if (input.startsWith("//")) {
+            input = input.replace("\\n", "\n");
+            int delimiterEndIndex = input.indexOf("\n");
+
+            if (delimiterEndIndex != 3) {
+                throw new IllegalArgumentException("커스텀 구분자 포맷이 잘못되었습니다.");
+            }
+
+            String customDelimiter = input.substring(2, delimiterEndIndex);
+
+            delimiter.add(customDelimiter);
+
+            input = input.substring(delimiterEndIndex + 1);
+        }
+
         List<String> numbers = Arrays.asList(input.split(String.valueOf(delimiter)));
 
         for (String number : numbers) {
