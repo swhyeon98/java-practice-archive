@@ -7,10 +7,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Application {
+
+    private static final List<String> DEFAULT_DELIMITERS = Arrays.asList(",", ":");
+
     public static void main(String[] args) {
         System.out.println("덧셈할 문자열을 입력해 주세요.");
         String input = Console.readLine();
-        List<String> delimiter = new ArrayList<>(Arrays.asList(",", ":"));
+        List<String> delimiter = new ArrayList<>(DEFAULT_DELIMITERS);
 
         if (input.isEmpty()) {
             System.out.println("결과 : 0");
