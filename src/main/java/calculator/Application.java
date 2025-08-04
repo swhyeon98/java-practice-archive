@@ -15,7 +15,7 @@ public class Application {
         String input = Console.readLine();
         List<String> delimiter = new ArrayList<>(DEFAULT_DELIMITERS);
 
-        if (input.isEmpty()) {
+        if (isEmptyInput(input)) {
             System.out.println("결과 : 0");
             return;
         }
@@ -48,5 +48,9 @@ public class Application {
                 .sum();
 
         System.out.println("결과 : " + result);
+    }
+
+    private static boolean isEmptyInput(String input) {
+        return input == null || input.trim().isEmpty();
     }
 }
