@@ -5,6 +5,7 @@ import camp.nextstep.edu.missionutils.Console;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Application {
 
@@ -22,7 +23,7 @@ public class Application {
 
         input = applyCustomDelimiterIfPresent(input, delimiter);
 
-        List<String> numbers = Arrays.asList(input.split(String.valueOf(delimiter)));
+        List<String> numbers = splitNumbersByDelimiters(input, delimiter);
 
         for (String number : numbers) {
             if (!number.chars().allMatch(Character::isDigit)) {
@@ -35,6 +36,10 @@ public class Application {
                 .sum();
 
         System.out.println("결과 : " + result);
+    }
+
+    private static boolean isEmptyInput(String input) {
+        return input == null || input.trim().isEmpty();
     }
 
     private static String applyCustomDelimiterIfPresent(String input, List<String> delimiter) {
@@ -55,7 +60,10 @@ public class Application {
         return input;
     }
 
-    private static boolean isEmptyInput(String input) {
-        return input == null || input.trim().isEmpty();
+    private static List<String> splitNumbersByDelimiters(String input, List<String> delimiters) {
+        String regex = String.join("|", delimiters.stream()
+                .map(Pattern::quote)
+                .toArray(String[]::new));
+        return Arrays.asList(input.split(regex));
     }
 }
