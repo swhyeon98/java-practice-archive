@@ -25,11 +25,7 @@ public class Application {
 
         List<String> numbers = splitNumbersByDelimiters(input, delimiter);
 
-        for (String number : numbers) {
-            if (!number.chars().allMatch(Character::isDigit)) {
-                throw new IllegalArgumentException("잘못된 입력입니다.");
-            }
-        }
+        validateNumericStrings(numbers);
 
         int result = numbers.stream()
                 .mapToInt(Integer::parseInt)
@@ -65,5 +61,13 @@ public class Application {
                 .map(Pattern::quote)
                 .toArray(String[]::new));
         return Arrays.asList(input.split(regex));
+    }
+
+    private static void validateNumericStrings(List<String> tokens) {
+        for (String token : tokens) {
+            if (!token.chars().allMatch(Character::isDigit)) {
+                throw new IllegalArgumentException("잘못된 입력입니다: " + token);
+            }
+        }
     }
 }
