@@ -22,11 +22,9 @@ public class Application {
         }
 
         input = applyCustomDelimiterIfPresent(input, delimiter);
-
         List<String> numbers = splitNumbersByDelimiters(input, delimiter);
 
         validateNumericStrings(numbers);
-
         int result = calculateSum(numbers);
 
         System.out.println("결과 : " + result);
