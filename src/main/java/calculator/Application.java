@@ -27,9 +27,7 @@ public class Application {
 
         validateNumericStrings(numbers);
 
-        int result = numbers.stream()
-                .mapToInt(Integer::parseInt)
-                .sum();
+        int result = calculateSum(numbers);
 
         System.out.println("결과 : " + result);
     }
@@ -69,5 +67,11 @@ public class Application {
                 throw new IllegalArgumentException("잘못된 입력입니다: " + token);
             }
         }
+    }
+
+    private static int calculateSum(List<String> numbers) {
+        return numbers.stream()
+                .mapToInt(Integer::parseInt)
+                .sum();
     }
 }
