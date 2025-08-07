@@ -25,6 +25,14 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    void 커스텀_구분자_여러_숫자() {
+        assertSimpleTest(() -> {
+            run("//#\\n3#4#5");
+            assertThat(output()).contains("결과 : 12");
+        });
+    }
+
+    @Test
     void 예외_테스트() {
         assertSimpleTest(() ->
                 assertThatThrownBy(() -> runException("-1,2,3"))
