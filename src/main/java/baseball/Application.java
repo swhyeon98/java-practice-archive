@@ -46,4 +46,12 @@ public class Application {
             seen[digit] = true;
         }
     }
+
+    private static List<Integer> parseInput(String input) {
+        List<Integer> guess = new ArrayList<>(3);
+        for (int i = 0; i < 3; i++) {
+            guess.add(input.charAt(i) - '0');
+        }
+        return guess;
+    }
 }
