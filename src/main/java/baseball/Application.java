@@ -54,4 +54,17 @@ public class Application {
         }
         return guess;
     }
+
+    private static int[] judge(List<Integer> secret, List<Integer> guess) {
+        int balls = 0, strikes = 0;
+        for (int i = 0; i < 3; i++) {
+            int g = guess.get(i);
+            if (g == secret.get(i)) {
+                strikes++;
+            } else if (secret.contains(g)) {
+                balls++;
+            }
+        }
+        return new int[]{balls, strikes};
+    }
 }
