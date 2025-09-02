@@ -67,4 +67,11 @@ public class Application {
         }
         return new int[]{balls, strikes};
     }
+
+    private static String formatHint(int balls, int strikes) {
+        if (balls == 0 && strikes == 0) return "낫싱";
+        if (balls > 0 && strikes > 0) return balls + "볼 " + strikes + "스트라이크";
+        if (balls > 0) return balls + "볼";
+        return strikes + "스트라이크";
+    }
 }
