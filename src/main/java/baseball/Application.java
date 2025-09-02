@@ -1,5 +1,6 @@
 package baseball;
 
+import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.Randoms;
 
 import java.util.ArrayList;
@@ -69,9 +70,26 @@ public class Application {
     }
 
     private static String formatHint(int balls, int strikes) {
-        if (balls == 0 && strikes == 0) return "낫싱";
-        if (balls > 0 && strikes > 0) return balls + "볼 " + strikes + "스트라이크";
-        if (balls > 0) return balls + "볼";
+        if (balls == 0 && strikes == 0) {
+            return "낫싱";
+        }
+        if (balls > 0 && strikes > 0) {
+            return balls + "볼 " + strikes + "스트라이크";
+        }
+        if (balls > 0) {
+            return balls + "볼";
+        }
         return strikes + "스트라이크";
+    }
+
+    private static boolean playTurn(List<Integer> secret) {
+        System.out.print("숫자를 입력해주세요 : ");
+        String raw = Console.readLine();
+        validateInput(raw);
+        List<Integer> guess = parseInput(raw);
+        int[] result = judge(secret, guess);
+        String hint = formatHint(result[0], result[1]);
+        System.out.println(hint);
+        return result[1] == 3; // strike == 3
     }
 }
