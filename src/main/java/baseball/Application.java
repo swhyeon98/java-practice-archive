@@ -92,4 +92,25 @@ public class Application {
         System.out.println(hint);
         return result[1] == 3; // strike == 3
     }
+
+    private static void runGameOnce() {
+        List<Integer> secret = getComputer();
+        while (!playTurn(secret)) { }
+        System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
+    }
+
+    private static int askRestartOrQuit() {
+        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+        String raw = Console.readLine();
+        int n;
+        try {
+            n = Integer.parseInt(raw);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("1 또는 2를 입력하세요.");
+        }
+        if (n != 1 && n != 2) {
+            throw new IllegalArgumentException("1 또는 2를 입력하세요.");
+        }
+        return n;
+    }
 }
