@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Application {
+    private static final String INVALID_INPUT_MSG = "입력은 1~9의 서로 다른 숫자 3자리여야 합니다.";
+
     public static void main(String[] args) {
         System.out.println("숫자 야구 게임을 시작합니다.");
         do {
@@ -30,21 +32,23 @@ public class Application {
     }
 
     private static void validateGuess(String s) {
-        if (s == null || s.length() != 3) {
-            throw new IllegalArgumentException("입력은 정확히 3자리여야 합니다.");
-        }
+        if (s == null) throw new IllegalArgumentException(INVALID_INPUT_MSG);
+        s = s.trim();
+        if (s.length() != 3) throw new IllegalArgumentException(INVALID_INPUT_MSG);
+
         boolean[] seen = new boolean[10];
         for (int i = 0; i < 3; i++) {
             char c = s.charAt(i);
-            if (!Character.isDigit(c)) throw new IllegalArgumentException("숫자만 입력하세요.");
+            if (!Character.isDigit(c)) throw new IllegalArgumentException(INVALID_INPUT_MSG);
             int d = c - '0';
-            if (d == 0) throw new IllegalArgumentException("각 자리는 1~9이어야 합니다.");
-            if (seen[d]) throw new IllegalArgumentException("중복 없는 3자리 숫자를 입력하세요.");
+            if (d == 0) throw new IllegalArgumentException(INVALID_INPUT_MSG);
+            if (seen[d]) throw new IllegalArgumentException(INVALID_INPUT_MSG);
             seen[d] = true;
         }
     }
 
     private static List<Integer> parseGuess(String s) {
+        s = s.trim();
         List<Integer> guess = new ArrayList<>(3);
         for (int i = 0; i < 3; i++) {
             guess.add(s.charAt(i) - '0');
@@ -93,13 +97,11 @@ public class Application {
         String raw = Console.readLine();
         int n;
         try {
-            n = Integer.parseInt(raw);
-        } catch (NumberFormatException e) {
+            n = Integer.parseInt(raw.trim());
+        } catch (Exception e) {
             throw new IllegalArgumentException("1 또는 2를 입력하세요.");
         }
-        if (n != 1 && n != 2) {
-            throw new IllegalArgumentException("1 또는 2를 입력하세요.");
-        }
+        if (n != 1 && n != 2) throw new IllegalArgumentException("1 또는 2를 입력하세요.");
         return n;
     }
 }
