@@ -7,101 +7,83 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Application {
-    private static final String INVALID_INPUT_MSG = "입력은 1~9의 서로 다른 숫자 3자리여야 합니다.";
-
     public static void main(String[] args) {
         System.out.println("숫자 야구 게임을 시작합니다.");
-        do {
-            runGameOnce();
-        } while (askRestartOrQuit() == 1);
-    }
 
-    private static List<Integer> generateSecret() {
-        List<Integer> secret = new ArrayList<>();
-        while (secret.size() < 3) {
-            int n = Randoms.pickNumberInRange(1, 9);
-            if (!secret.contains(n)) {
-                secret.add(n);
+        int strike = 0;
+        int ball = 0;
+        int gameControl = 0;
+
+        while (gameControl != 2) {
+            List<Integer> computer = new ArrayList<>();
+            while (computer.size() < 3) {
+                int randomNumber = Randoms.pickNumberInRange(1, 9);
+                if (!computer.contains(randomNumber)) {
+                    computer.add(randomNumber);
+                }
             }
-        }
-        return secret;
-    }
 
-    private static String readGuess() {
-        return Console.readLine();
-    }
+            while (true) {
+                System.out.print("숫자를 입력해주세요 : ");
+                String[] input = Console.readLine().split("");
+                List<Integer> user = new ArrayList<>();
 
-    private static void validateGuess(String s) {
-        if (s == null) throw new IllegalArgumentException(INVALID_INPUT_MSG);
-        s = s.trim();
-        if (s.length() != 3) throw new IllegalArgumentException(INVALID_INPUT_MSG);
+                if (input.length != 3) {
+                    throw new IllegalArgumentException("3개 아님.");
+                }
 
-        boolean[] seen = new boolean[10];
-        for (int i = 0; i < 3; i++) {
-            char c = s.charAt(i);
-            if (!Character.isDigit(c)) throw new IllegalArgumentException(INVALID_INPUT_MSG);
-            int d = c - '0';
-            if (d == 0) throw new IllegalArgumentException(INVALID_INPUT_MSG);
-            if (seen[d]) throw new IllegalArgumentException(INVALID_INPUT_MSG);
-            seen[d] = true;
-        }
-    }
+                for (String s : input) {
+                    if (!s.chars().allMatch(Character::isDigit)) {
+                        throw new IllegalArgumentException("숫자만 입력하세요.");
+                    }
+                }
 
-    private static List<Integer> parseGuess(String s) {
-        s = s.trim();
-        List<Integer> guess = new ArrayList<>(3);
-        for (int i = 0; i < 3; i++) {
-            guess.add(s.charAt(i) - '0');
-        }
-        return guess;
-    }
+                for (String s : input) {
+                    user.add(Integer.valueOf(s));
+                }
 
-    private static int[] judge(List<Integer> secret, List<Integer> guess) {
-        int balls = 0, strikes = 0;
-        for (int i = 0; i < 3; i++) {
-            int g = guess.get(i);
-            if (g == secret.get(i)) {
-                strikes++;
-            } else if (secret.contains(g)) {
-                balls++;
+                for (int i = 0; i < computer.size(); i++) {
+                    if (computer.get(i).equals(user.get(i))) {
+                        strike++;
+                    } else if (computer.contains(user.get(i))) {
+                        ball++;
+                    }
+                }
+
+                StringBuilder sb = new StringBuilder();
+
+                if (ball > 0) {
+                    sb.append(ball).append("볼");
+                }
+
+                if (strike > 0) {
+                    if (sb.length() > 0) {
+                        sb.append(" ");
+                    }
+                    sb.append(strike).append("스트라이크");
+                }
+
+                if (sb.length() == 0) {
+                    sb.append("낫싱");
+                }
+
+                System.out.println(sb.toString());
+
+                if (strike == 3) {
+                    strike = 0;
+                    ball = 0;
+                    break;
+                }
+
+                strike = 0;
+                ball = 0;
             }
+
+            System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
+            System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+            gameControl = Integer.parseInt(Console.readLine());
         }
-        return new int[]{balls, strikes};
     }
 
-    private static String formatHint(int balls, int strikes) {
-        if (balls == 0 && strikes == 0) return "낫싱";
-        if (balls > 0 && strikes > 0) return balls + "볼 " + strikes + "스트라이크";
-        if (balls > 0) return balls + "볼";
-        return strikes + "스트라이크";
-    }
-
-    private static boolean playTurn(List<Integer> secret) {
-        System.out.print("숫자를 입력해주세요 : ");
-        String raw = readGuess();
-        validateGuess(raw);
-        List<Integer> guess = parseGuess(raw);
-        int[] result = judge(secret, guess);
-        System.out.println(formatHint(result[0], result[1]));
-        return result[1] == 3;
-    }
-
-    private static void runGameOnce() {
-        List<Integer> secret = generateSecret();
-        while (!playTurn(secret)) { }
-        System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
-    }
-
-    private static int askRestartOrQuit() {
-        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
-        String raw = Console.readLine();
-        int n;
-        try {
-            n = Integer.parseInt(raw.trim());
-        } catch (Exception e) {
-            throw new IllegalArgumentException("1 또는 2를 입력하세요.");
-        }
-        if (n != 1 && n != 2) throw new IllegalArgumentException("1 또는 2를 입력하세요.");
-        return n;
-    }
+    private
 }
