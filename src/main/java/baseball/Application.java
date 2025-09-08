@@ -84,6 +84,4 @@ public class Application {
             gameControl = Integer.parseInt(Console.readLine());
         }
     }
-
-    private
 }
