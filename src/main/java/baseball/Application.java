@@ -15,13 +15,7 @@ public class Application {
         int gameControl = 0;
 
         while (gameControl != 2) {
-            List<Integer> computer = new ArrayList<>();
-            while (computer.size() < 3) {
-                int randomNumber = Randoms.pickNumberInRange(1, 9);
-                if (!computer.contains(randomNumber)) {
-                    computer.add(randomNumber);
-                }
-            }
+            List<Integer> computer = generateSecretNumbers();
 
             while (true) {
                 System.out.print("숫자를 입력해주세요 : ");
@@ -83,5 +77,16 @@ public class Application {
             System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
             gameControl = Integer.parseInt(Console.readLine());
         }
+    }
+
+    private static List<Integer> generateSecretNumbers() {
+        List<Integer> secret = new ArrayList<>();
+        while (secret.size() < 3) {
+            int randomNumber = Randoms.pickNumberInRange(1, 9);
+            if (!secret.contains(randomNumber)) {
+                secret.add(randomNumber);
+            }
+        }
+        return secret;
     }
 }
