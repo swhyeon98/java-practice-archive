@@ -20,17 +20,10 @@ public class Application {
             while (true) {
                 System.out.print("숫자를 입력해주세요 : ");
                 String[] input = Console.readLine().split("");
+
+                validateInput(input);
+
                 List<Integer> user = new ArrayList<>();
-
-                if (input.length != 3) {
-                    throw new IllegalArgumentException("3개 아님.");
-                }
-
-                for (String s : input) {
-                    if (!s.chars().allMatch(Character::isDigit)) {
-                        throw new IllegalArgumentException("숫자만 입력하세요.");
-                    }
-                }
 
                 for (String s : input) {
                     user.add(Integer.valueOf(s));
@@ -88,5 +81,17 @@ public class Application {
             }
         }
         return secret;
+    }
+
+    private static void validateInput(String[] input) {
+        if (input.length != 3) {
+            throw new IllegalArgumentException("3개 아님.");
+        }
+
+        for (String s : input) {
+            if (!s.chars().allMatch(Character::isDigit)) {
+                throw new IllegalArgumentException("숫자만 입력하세요.");
+            }
+        }
     }
 }
