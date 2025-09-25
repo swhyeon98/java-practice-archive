@@ -13,23 +13,29 @@ public class Lotto {
     }
 
     private void validate(List<Integer> numbers) {
+        validateSize(numbers);
+        validateRange(numbers);
+        validateDistinct(numbers);
+    }
+
+    private void validateSize(List<Integer> numbers) {
         if (numbers.size() != 6) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
         }
     }
 
-    private void validateNumbersInRange(List<Integer> numbers) {
+    private void validateRange(List<Integer> numbers) {
         for (Integer number : numbers) {
-            if (number > 45 || number < 0) {
-                throw new IllegalArgumentException("[ERROR] 로또 번호의 범위는 1~45입니다.");
+            if (number > 45 || number < 1) {
+                throw new IllegalArgumentException("[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다.");
             }
         }
     }
 
-    private void validateAllDistinct(List<Integer> numbers) {
+    private void validateDistinct(List<Integer> numbers) {
         Set<Integer> unique = new HashSet<>(numbers);
         if (unique.size() != 6) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 서로 다른 6개여야 합니다.");
+            throw new IllegalArgumentException("[ERROR] 로또 번호는 서로 다른 6개 숫자여야 합니다.");
         }
     }
 }
