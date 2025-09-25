@@ -2,9 +2,12 @@ package lotto;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LottoTest {
@@ -21,5 +24,24 @@ class LottoTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    // TODO: 추가 기능 구현에 따른 테스트 코드 작성
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 0, 46})
+    void 로또_번호는_1부터_45_사이의_숫자여야_한다(int invalidNumber) {
+        //given
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, invalidNumber);
+
+        //when & then
+        assertThatThrownBy(() -> new Lotto(numbers))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 45})
+    void 로또_번호_경계값은_예외가_발생하지_않아야_한다(int boundary) {
+        //given
+        List<Integer> numbers = List.of(boundary, 2,3,4,5,6);
+
+        //when & then
+        assertThatNoException().isThrownBy(() -> new Lotto(numbers));
+    }
 }
