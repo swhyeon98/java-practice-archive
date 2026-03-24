@@ -7,14 +7,15 @@ import java.io.InputStreamReader;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int[] arr = new int[31];
+        boolean[] submitted = new boolean[31];
 
         for (int i = 0; i < 28; i++) {
-            arr[Integer.parseInt(br.readLine())]++;
+            int num = Integer.parseInt(br.readLine());
+            submitted[num] = true;
         }
 
         for (int i = 1; i <= 30; i++) {
-            if (arr[i] == 0) {
+            if (!submitted[i]) {
                 System.out.println(i);
             }
         }
