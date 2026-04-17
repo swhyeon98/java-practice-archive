@@ -14,26 +14,14 @@ import java.util.Arrays;
 
 class Solution {
     public int solution(String before, String after) {
-        char[] befores = new char[26];
-        char[] afters = new char[26];
-        int answer = 0;
-
-        if (before.length() != after.length()) {
-            return 0;
-        }
+        int[] beforeCount = new int[26];
+        int[] afterCount = new int[26];
 
         for (int i = 0; i < before.length(); i++) {
-            befores[before.charAt(i) - 'a']++;
+            beforeCount[before.charAt(i) - 'a']++;
+            afterCount[after.charAt(i) - 'a']++;
         }
 
-        for (int i = 0; i < after.length(); i++) {
-            afters[after.charAt(i) - 'a']++;
-        }
-
-        if (Arrays.equals(befores, afters)) {
-            answer = 1;
-        }
-
-        return answer;
+        return Arrays.equals(beforeCount, afterCount) ? 1 : 0;
     }
 }
